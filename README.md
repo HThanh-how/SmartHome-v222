@@ -1,4 +1,4 @@
-# Welcome to our UWC 2.0 project!
+# Welcome to our Smarthome 2.0 project!
 
 To install,
 

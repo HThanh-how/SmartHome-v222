@@ -40,7 +40,7 @@ const Login = (props) => {
     setState({ ...state, [event.target.name]: event.target.value })
   }
 
-  const { from } = props.location.state || { from: { pathname: '/UWC' } };
+  const { from } = props.location.state || { from: { pathname: '/SmartHome' } };
   if (hasToken(JSON.parse(localStorage.getItem('authenticated')))) {
     return (
       <Redirect to={from} />
@@ -57,7 +57,7 @@ const Login = (props) => {
                 <p className="auth-header mb-0">Đăng nhập</p>
                 <div className="logo-block">
                   <SofiaLogo />
-                  <p className="mb-0">UWC</p>
+                  <p className="mb-0">Smart Home</p>
                 </div>
               </div>
               {/* <div className="auth-info my-2">

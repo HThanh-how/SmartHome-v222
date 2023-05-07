@@ -106,8 +106,8 @@ const Header = (props) => {
             </div>
           </DropdownToggle>
           <DropdownMenu right className="navbar-dropdown notifications-dropdown" style={{ width: "340px" }}>
-            <DropdownItem href="/#/UWC/notifications"><img src={basketIcon} alt="Basket Icon"/><span>12 Tin nhắn mới từ Nghĩa</span></DropdownItem>
-            <DropdownItem href="/#/UWC/notifications">
+            <DropdownItem href="/#/SmartHome/notifications"><img src={basketIcon} alt="Basket Icon"/><span>12 Tin nhắn mới từ Nghĩa</span></DropdownItem>
+            <DropdownItem href="/#/SmartHome/notifications">
               <div>
                 <div className="d-flex flex-row mb-1">
                   <img src={mariaImage} alt="Maria" className={s.mariaImage} />
@@ -120,8 +120,8 @@ const Header = (props) => {
                 <p className="body-2 muted">Em chụp hình gửi chị thùng rác số 4</p>
               </div>
             </DropdownItem>
-            <DropdownItem href="/#/UWC/HR"><img src={calendarIcon} alt="Calendar Icon"/><span>Nghĩa đã hoàn thành xong công việc</span></DropdownItem>
-            <DropdownItem href="/#/UWC/notifications"><img src={envelopeIcon} alt="Envelope Icon"/><span>2 tin nhắn khác chưa đọc</span></DropdownItem>
+            <DropdownItem href="/#/SmartHome/HR"><img src={calendarIcon} alt="Calendar Icon"/><span>Nghĩa đã hoàn thành xong công việc</span></DropdownItem>
+            <DropdownItem href="/#/SmartHome/notifications"><img src={envelopeIcon} alt="Envelope Icon"/><span>2 tin nhắn khác chưa đọc</span></DropdownItem>
           </DropdownMenu>
         </Dropdown>
         <Dropdown isOpen={notificationsOpen} toggle={() => toggleNotifications()} nav id="basic-nav-dropdown" className="ml-3">
@@ -133,8 +133,8 @@ const Header = (props) => {
           </DropdownToggle>
           <DropdownMenu className="navbar-dropdown profile-dropdown" style={{ width: "194px" }}>
             <DropdownItem className={s.dropdownProfileItem}><ProfileIcon/><span>Cá nhân</span></DropdownItem>
-            <DropdownItem href="/#/UWC/HR" className={s.dropdownProfileItem}><TasksIcon/><span>Lịch biểu</span></DropdownItem>
-            <DropdownItem href="/#/UWC/notifications" className={s.dropdownProfileItem}><MessagesIcon/><span>Tin nhắn</span></DropdownItem>
+            <DropdownItem href="/#/SmartHome" className={s.dropdownProfileItem}><TasksIcon/><span>Lịch biểu</span></DropdownItem>
+            <DropdownItem href="/#/SmartHome/notifications" className={s.dropdownProfileItem}><MessagesIcon/><span>Tin nhắn</span></DropdownItem>
             <NavItem>
               <NavLink onClick={() => doLogout()} href="#">
                 <button className="btn btn-primary rounded-pill mx-auto logout-btn" type="submit"><img src={logoutIcon} alt="Logout"/><span className="ml-1">Đăng xuất</span></button>

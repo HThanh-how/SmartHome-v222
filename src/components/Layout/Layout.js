@@ -31,15 +31,15 @@ const Layout = (props) => {
         <main className={s.content}>
           <Breadcrumbs url={props.location.pathname} />
           <Switch>
-            <Route path="/UWC" exact render={() => <Redirect to="UWC/dashboard"/>} />
-            <Route path="/UWC/dashboard" exact component={Dashboard}/>
-            <Route path="/UWC/typography" exact component={Typography} />
-            <Route path="/UWC/HR" exact component={Tables} />
-            <Route path="/UWC/notifications" exact component={Notifications} />
-            <Route path="/UWC/ui-elements" exact render={() => <Redirect to={"/UWC/ui-elements/charts"} />} />
-            <Route path="/UWC/ui-elements/charts" exact component={Charts} />
-            <Route path="/UWC/ui-elements/icons" exact component={Icons} />
-            <Route path="/UWC/ui-elements/maps" exact component={Maps} />
+            <Route path="/SmartHome" exact render={() => <Redirect to="SmartHome/dashboard"/>} />
+            <Route path="/SmartHome/dashboard" exact component={Dashboard}/>
+            <Route path="/SmartHome/typography" exact component={Typography} />
+            <Route path="/SmartHome/HR" exact component={Tables} />
+            <Route path="/SmartHome/notifications" exact component={Notifications} />
+            <Route path="/SmartHome/ui-elements" exact render={() => <Redirect to={"/SmartHome/ui-elements/charts"} />} />
+            <Route path="/SmartHome/ui-elements/charts" exact component={Charts} />
+            <Route path="/SmartHome/ui-elements/icons" exact component={Icons} />
+            <Route path="/SmartHome/ui-elements/maps" exact component={Maps} />
             <Route path='*' exact render={() => <Redirect to="/error" />} />
           </Switch>
         </main>

@@ -19,7 +19,7 @@ const ErrorPage = () => {
         <p className={s.errorHelp}>
           Chúng mình sẽ đưa bạn về an toàn thôi nè!!!
         </p>
-        <Link to="/UWC/dashboard">
+        <Link to="/SmartHome/dashboard">
           <Button className={`${s.errorBtn} rounded-pill`} type="submit" color="secondary-red">
             Về thôi
           </Button>

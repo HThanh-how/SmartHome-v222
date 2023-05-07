@@ -39,7 +39,7 @@ const Register = (props) => {
     }))
   }
 
-  const { from } = props.location.state || { from: { pathname: '/UWC' } }
+  const { from } = props.location.state || { from: { pathname: '/SmartHome' } }
 
   if (hasToken(JSON.parse(localStorage.getItem('authenticated')))) {
     return (
@@ -57,7 +57,7 @@ const Register = (props) => {
                 <p className="auth-header mb-0">Quên mật khẩu</p>
                 <div className="logo-block">
                   <SofiaLogo />
-                  <p className="mb-0">UWC</p>
+                  <p className="mb-0">Smart Home</p>
                 </div>
               </div>
               <div className="auth-info my-2">

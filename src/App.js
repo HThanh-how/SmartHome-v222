@@ -11,6 +11,8 @@ import LayoutComponent from "./components/Layout/Layout";
 import ErrorPage from "./pages/error/ErrorPage";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Charts from "./pages/uielements/charts/Charts";
+import ColorPicker from "./pages/dashboard/components/ColorPicker";
 
 // -- Redux Actions
 import { logoutUser } from "./actions/auth";
@@ -41,13 +43,14 @@ const App = (props) => {
       <ToastContainer/>
       <HashRouter>
         <Switch>
-          <Route path="/" exact render={() => <Redirect to="/UWC/dashboard" />} />
-          <Route path="/UWC" exact render={() => <Redirect to="/UWC/dashboard"/>}/>
-          <PrivateRoute path="/UWC" dispatch={props.dispatch} component={LayoutComponent} />
+          <Route path="/" exact render={() => <Redirect to="/SmartHome/dashboard" />} />
+          <Route path="/SmartHome" exact render={() => <Redirect to="/SmartHome/dashboard"/>}/>
+          <PrivateRoute path="/SmartHome" dispatch={props.dispatch} component={LayoutComponent} />
           <Route path="/login" exact component={Login} />
           <Route path="/error" exact component={ErrorPage} />
           <Route path="/register" exact component={Register} />
-          <Route component={ErrorPage}/>
+          <Route path="/charts" exact component={Charts} />
+          <Route component={ColorPicker}/>
           <Route path='*' exact={true} render={() => <Redirect to="/error" />} />
         </Switch>
       </HashRouter>

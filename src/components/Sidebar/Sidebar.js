@@ -31,8 +31,8 @@ const Sidebar = (props) => {
   return (
     <nav className={cn(s.root, { [s.sidebarOpen]: burgerSidebarOpen })} >
       <header  className={s.logo}>
-        <SofiaLogo href="/#/UWC/dashboard"/>
-        <span href="/#/UWC/dashboard" className={s.title}>UWC</span>
+        <SofiaLogo href="/#/SmartHome/dashboard"/>
+        <span href="/#/SmartHome/dashboard" className={s.title}>Smart Home</span>
       </header>
       <ul className={s.nav}>
         <LinksGroup
@@ -41,29 +41,11 @@ const Sidebar = (props) => {
           header="Trang tổng quan"
           isHeader
           iconName={<i className={'eva eva-home-outline'} />}
-          link="/UWC/dashboard"
+          link="/SmartHome/dashboard"
           index="dashboard"
           badge="9"
         />
-        <h5 className={s.navTitle}>UWC</h5>
-        <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
-          header="Nhân sự"
-          isHeader
-          iconName={<i className={'eva eva-grid-outline'}/>}
-          link="/UWC/HR"
-          index="tables"
-        />
-        <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
-          header="Cập nhật"
-          isHeader
-          iconName={<i className={'eva eva-bell-outline'} />}
-          link="/UWC/notifications"
-          index="notifications"
-        />
+        
       </ul>
     </nav>
   );

@@ -9,47 +9,67 @@ import {
     DropdownItem,
     UncontrolledDropdown
   } from "reactstrap";
+
+//   #FF0000	Red
+// #FFA500 	Orange
+// #FFFF00	Yellow
+// #00FF00	Green
+// #0000FF	Blue
+// #4B0082	Indigo
+// #800080	Purple
 import s from "../Dashboard.module.scss";
 import { CirclePicker } from "react-color";
 import { Switch } from "antd";
 import axios from "axios";
-const colors = ["#FFFFFF","#FF0000", "#FFA500", "#FFFF00", "#00FF00", "#0000FF", "4B0082", "#800080"];
+const colors = ["White","Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Purple"];
 
 
 export default function ColorPicker(status) {
   const [color, setColor] = useState("#000000");
   const [showPicker, setShowPicker] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(false);
-  const [lastColor, setLastColor] = useState("#FF0000");
-
+  const [lastColor, setLastColor] = useState("Red");
+  const key="aio_lDJR44Osy7eRQWetzVWeNBWe2MTp";
   useEffect(() => {
-    const interval = setInterval(() => {
+      const interval = setInterval(() => {
       axios
-        .get('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v11')
+        .get('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v10')
         .then(response => {
-          if (response.data.last_value != "#000000") {
+          if (response.data.last_value == 1) {
             setIsSwitchOn(true)
-            setLastColor(response.data.last_value)
           }
-          console.log(response.data.last_value)
+          else setIsSwitchOn(false);
+          // console.log(response.data.last_value)
         });
-    }, 1000);
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
+  const sendData = async () => {
+    const url = 'https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v10/data';
+    const value = isSwitchOn ? '0' : '1';
+    const data = { datum: { value } };
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-AIO-Key': key },
+      body: JSON.stringify(data),
+    };
+    await fetch(url, options);
+  };
+    
   const sendColorData =  (value) => {
     axios.post('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v11/data', {
         value: value
       }, {
         headers: {
-          'X-AIO-Key': 'aio_XTyq67VDg7YwxsD9u99ZDGmCowiU'
+          'X-AIO-Key': key
         }
       })
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
  
   };
@@ -63,19 +83,26 @@ export default function ColorPicker(status) {
 
   const handleSwitchToggle = (checked) => {
     setIsSwitchOn(checked);
+    sendData();
     setColor(checked ? lastColor : "#000000");
+    console.log("Last color:", lastColor)
     if (checked) sendColorData (lastColor)
     else sendColorData ("#000000")
   };
 
   const handleCircleClick = () => {
+
     setShowPicker(true); 
     if (!isSwitchOn) {
         setIsSwitchOn(true) 
+        sendData();
         sendColorData(lastColor)
+        
     }
 
   };
+
+  
 
   return (
 
@@ -115,4 +142,30 @@ export default function ColorPicker(status) {
 
 
 
-console.log('Hello console')
+
+
+
+
+// import React, { useState, useEffect } from 'react';
+
+// export function App(props) {
+//   const [imageData, setImageData] = useState(null);
+
+//   useEffect(() => {
+//     async function fetchImage() {
+//       const response = await fetch('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/image', {
+//       });
+//       const data = await response.json();
+//       setImageData(data.last_value);
+//     }
+//     fetchImage();
+//   }, []);
+
+//   return (
+//     <div>
+//       {imageData && (
+//         <img src={`data:image/jpeg;base64,${imageData}`} alt="Adafruit API image" />
+//       )}
+//     </div>
+//   );
+// }

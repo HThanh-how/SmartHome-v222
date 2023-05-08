@@ -27,7 +27,7 @@ import LinkedinIcon from "../../components/Icons/AuthIcons/LinkedinIcon.js";
 const Login = (props) => {
 
   const [state, setState] = useState({
-    email: 'huythanh@uwc.com',
+    email: 'huythanh@smarthome.com',
     password: 'password',
   })
 

@@ -1,19 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import ApexCharts from "react-apexcharts";
 
+  
 
 
 
-const series = [
-  {
-    name: "Nhiệt độ",
-    data: [670, 720, 770, 690, 900, 970, 1030],
-  },
-  {
-    name: "Độ ẩm",
-    data: [760, 590, 910, 850, 700, 1050, 920],
-  },
-];
 
 const chartSettings = {
   dataLabels: {
@@ -76,6 +67,41 @@ const chartSettings = {
 };
 
 export default function ApexLineChart() {
+  const [lastData, setLastData] = useState([]);
+  const [humidData, setHumidData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v1/data');
+      const json = await response.json();
+      setLastData(json.slice(0,7));
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v2/data');
+      const json = await response.json();
+      setHumidData(json.slice(0,7));
+    };
+
+    fetchData();
+  }, []);
+
+  const series = [
+    {
+      name: "Nhiệt độ",
+      data: [parseFloat(lastData[6]?.value), parseFloat(lastData[5]?.value), parseFloat(lastData[4]?.value), parseFloat(lastData[3]?.value), parseFloat(lastData[2]?.value), parseFloat(lastData[1]?.value), parseFloat(lastData[0]?.value)],
+    },
+    {
+      name: "Độ ẩm",
+      data: [parseFloat(humidData[6]?.value)%50, parseFloat(humidData[5]?.value)%50, parseFloat(humidData[4]?.value), parseFloat(humidData[3]?.value)%50, parseFloat(humidData[2]?.value)%50, parseFloat(humidData[1]?.value), parseFloat(humidData[0]?.value)],
+    },
+  ];
+
+
   return (
     <ApexCharts
       options={chartSettings}

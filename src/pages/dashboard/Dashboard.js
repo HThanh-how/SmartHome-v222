@@ -15,10 +15,59 @@ import Widget from '../../components/Widget/Widget.js';
 import { Switch, Slider, Space } from 'antd';
 import s from './Dashboard.module.scss';
 import ApexLineChart from './components/ApexLineChart.js';
+import { turnOff, turnOn } from './components/TurnAll.js';
 
 const Dashboard = () => {
+  const key="aio_lDJR44Osy7eRQWetzVWeNBWe2MTp";
+  const [tempSensorValue, setTempSensorValue] = useState();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [imageData, setImageData] = useState(null);
   const [lightButton, setLightButton] = useState();
+  const [muted, setMuted] = useState(false);
+  const [assistant, getAssistant]=useState();
+  const [lighSensorValue, setLightSensorValue] = useState();
+  const [AIreconizer, getDataAI] = useState();
+  const [fanSpeed, setFanSpeed] = useState();
 
+  const responseTime=2100;
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
+  
+
+
+  
+  ///image
+  useEffect(() => {
+    async function fetchImage() {
+      const response = await fetch('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/image', {
+      });
+      const data = await response.json();
+      setImageData(data.last_value);
+    }
+    fetchImage();
+  }, []);
+
+
+  //Assidtant
+  useEffect(() => {
+    const interval = setInterval(() => {
+      axios
+        .get('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v13')
+        .then(response => {
+          getAssistant(response.data.last_value);
+        });
+    }, responseTime);
+    return () => clearInterval(interval);
+  }, []);
+
+
+
+
+
+
+
+  
   useEffect(() => {
     const interval = setInterval(() => {
       axios
@@ -27,11 +76,11 @@ const Dashboard = () => {
           if (response.data.last_value == 1) setLightButton(true);
           else setLightButton(false);
         });
-    }, 1000);
+    }, responseTime);
     return () => clearInterval(interval);
   }, []);
-  console.log(lightButton);
-  const [tempSensorValue, setTempSensorValue] = useState();
+  // console.log(lightButton);
+  
   useEffect(() => {
     const interval = setInterval(() => {
       axios
@@ -39,7 +88,7 @@ const Dashboard = () => {
         .then(response => {
           setTempSensorValue(response.data.last_value);
         });
-    }, 1000);
+    }, responseTime);
 
     return () => clearInterval(interval);
   }, []);
@@ -52,12 +101,12 @@ const Dashboard = () => {
         .then(response => {
           setHumidSensorValue(response.data.last_value);
         });
-    }, 600);
+    }, responseTime);
 
     return () => clearInterval(interval);
   }, []);
 
-  const [lighSensorValue, setLightSensorValue] = useState();
+  
   useEffect(() => {
     const interval = setInterval(() => {
       axios
@@ -65,20 +114,23 @@ const Dashboard = () => {
         .then(response => {
           setLightSensorValue(response.data.last_value);
         });
-    }, 1000);
+    }, responseTime);
 
     return () => clearInterval(interval);
   }, []);
 
-  const [fanSpeed, setFanSpeed] = useState();
+  
   useEffect(() => {
     const interval = setInterval(() => {
       axios
         .get('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v12')
         .then(response => {
           setFanSpeed(response.data.last_value);
+          if (response.data.last_value==0) setMuted(true)
+          else setMuted(false)
+
         });
-    }, 1000);
+    }, responseTime);
 
     return () => clearInterval(interval);
   }, []);
@@ -90,7 +142,7 @@ const Dashboard = () => {
 
   const sendFanSpeedData = value => {
     setFanSpeed(value);
-    console.log(fanSpeed);
+    // console.log(fanSpeed);
     if (muted) {
       setPreviousSpeed(value);
     }
@@ -103,19 +155,19 @@ const Dashboard = () => {
         },
         {
           headers: {
-            'X-AIO-Key': 'aio_XTyq67VDg7YwxsD9u99ZDGmCowiU',
+            'X-AIO-Key': key,
           },
         }
       )
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
-  const [AIreconizer, getDataAI] = useState();
+  
   useEffect(() => {
     const interval = setInterval(() => {
       axios
@@ -123,14 +175,14 @@ const Dashboard = () => {
         .then(response => {
           getDataAI(response.data.last_value);
         });
-    }, 1000);
+    }, responseTime);
 
     return () => clearInterval(interval);
   }, []);
 
 
-  const [muted, setMuted] = useState(false);
-  const [previousSpeed, setPreviousSpeed] = useState(fanSpeed);
+  
+  const [previousSpeed, setPreviousSpeed] = useState(60);
 
   const handleMuteSwitch = checked => {
     setMuted(!checked);
@@ -151,7 +203,6 @@ const Dashboard = () => {
   }
   const sendData = async () => {
     const url = 'https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/v10/data';
-    const key = 'aio_XTyq67VDg7YwxsD9u99ZDGmCowiU';
     const value = lightButton ? '0' : '1';
     const data = { datum: { value } };
     const options = {
@@ -202,7 +253,7 @@ const Dashboard = () => {
                     <Progress
                       color='secondary-red'
                       className={`progress-xs ${s.mutedPink}`}
-                      value={tempSensorValue}
+                      value={tempSensorValue/0.4}
                     />
                   </div>
                 </div>
@@ -253,7 +304,7 @@ const Dashboard = () => {
                     <Progress
                       color='secondary-cyan'
                       className={`progress-xs ${s.mutedTeal}`}
-                      value={lighSensorValue}
+                      value={lighSensorValue/5}
                     />
                   </div>
                 </div>
@@ -300,7 +351,7 @@ xl, extra-large: 1536px */}
                 <div className='d-flex'>
                   <div className='d-flex flex-column'>
                     <p className='body-2'>Trợ lý</p>
-                    <p className='body-3 muted'>Đèn trần</p>
+                    <p className='body-3 muted'>{assistant}</p>
                   </div>
                 </div>
                 <div className='checkbox checkbox-primary'>
@@ -309,7 +360,7 @@ xl, extra-large: 1536px */}
               </div>
             </div>
             <p className='headline-3 mt-3'>Công tắt</p>
-            <div className={`mt-3 ${s.widgetBlock}`}>
+            {/* <div className={`mt-3 ${s.widgetBlock}`}>
               <div className={s.widgetBody}>
                 <div className='d-flex'>
                   <div className='d-flex flex-column'>
@@ -325,7 +376,7 @@ xl, extra-large: 1536px */}
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className={`mt-3 ${s.widgetBlock}`}>
               <div className={s.widgetBody}>
                 <div className='d-flex'>
@@ -355,7 +406,15 @@ xl, extra-large: 1536px */}
               role='button'
             >
               <div>
-                <p className='headline-2' onClick={handleTurnAll}>Tắt tất cả</p>
+                <p className='headline-2' onClick={()=>turnOff()}>Tắt tất cả</p>
+              </div>
+            </a>
+            <a
+              className={`btn-primary ${s.statsBtn}`}
+              role='button'
+            >
+              <div>
+                <p className='headline-2' onClick={()=>turnOn(previousSpeed)}>Bật tất cả</p>
               </div>
             </a>
           </Widget>

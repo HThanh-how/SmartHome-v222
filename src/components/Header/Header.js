@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
@@ -43,6 +43,30 @@ import "animate.css";
 const Header = (props) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+
+
+
+  const [imageData, setImageData] = useState(null);
+
+  useEffect(() => {
+    async function fetchImage() {
+      const response = await fetch('https://io.adafruit.com/api/v2/HCMUT_IOT/feeds/image', {
+      });
+      const data = await response.json();
+      setImageData(data.last_value);
+    }
+    fetchImage();
+  }, []);
+
+//   return (
+//     <div>
+//       {imageData && (
+//         <img src={`data:image/jpeg;base64,${imageData}`} alt="Adafruit API image" />
+//       )}
+//     </div>
+//   );
+// }
+
 
   const toggleNotifications = () => {
     setNotificationsOpen(!notificationsOpen);
@@ -98,6 +122,7 @@ const Header = (props) => {
             <SearchIcon />
           </NavLink>
         </NavItem>
+        
         <Dropdown nav isOpen={menuOpen} toggle={() => toggleMenu()} className="tutorial-dropdown mr-2 mr-sm-3">
           <DropdownToggle nav>
             <div className={s.navbarBlock}>
@@ -106,24 +131,26 @@ const Header = (props) => {
             </div>
           </DropdownToggle>
           <DropdownMenu right className="navbar-dropdown notifications-dropdown" style={{ width: "340px" }}>
-            <DropdownItem href="/#/SmartHome/notifications"><img src={basketIcon} alt="Basket Icon"/><span>12 Tin nhắn mới từ Nghĩa</span></DropdownItem>
-            <DropdownItem href="/#/SmartHome/notifications">
+            
+            <DropdownItem >
               <div>
                 <div className="d-flex flex-row mb-1">
-                  <img src={mariaImage} alt="Maria" className={s.mariaImage} />
+                  {/* <img src={mariaImage} alt="Maria" className={s.mariaImage} /> */}
                   <div className="d-flex flex-column">
-                    <p className="body-3">Nghĩa Nguyễn</p>
-                    <p className="label muted">15 phút trước</p>
+                    <p className="body-3">AI detect</p>
+                    {/* <p className="label muted">15 phút trước</p> */}
                   </div>
                 </div>
-                <img src={notificationImage} alt="Notification Icon" className={s.notificationImage}/>
-                <p className="body-2 muted">Em chụp hình gửi chị thùng rác số 4</p>
+                <img src={`data:image/jpeg;base64,${imageData}`} alt="Notification Icon" className={s.notificationImage}/>
+                {/* <p className="body-2 muted">Em chụp hình gửi chị thùng rác số 4</p> */}
               </div>
             </DropdownItem>
-            <DropdownItem href="/#/SmartHome/HR"><img src={calendarIcon} alt="Calendar Icon"/><span>Nghĩa đã hoàn thành xong công việc</span></DropdownItem>
-            <DropdownItem href="/#/SmartHome/notifications"><img src={envelopeIcon} alt="Envelope Icon"/><span>2 tin nhắn khác chưa đọc</span></DropdownItem>
           </DropdownMenu>
         </Dropdown>
+
+
+
+
         <Dropdown isOpen={notificationsOpen} toggle={() => toggleNotifications()} nav id="basic-nav-dropdown" className="ml-3">
           <DropdownToggle nav caret className="navbar-dropdown-toggle">
             <span className={`${s.avatar} rounded-circle float-left mr-2`}>

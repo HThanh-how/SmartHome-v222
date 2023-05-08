@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"; 
+import key from "../../../assets/keyAdafruit.js";
 import {
     Col,
     Row,
@@ -29,7 +30,6 @@ export default function ColorPicker(status) {
   const [showPicker, setShowPicker] = useState(false);
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [lastColor, setLastColor] = useState("Red");
-  const key="aio_lDJR44Osy7eRQWetzVWeNBWe2MTp";
   useEffect(() => {
       const interval = setInterval(() => {
       axios

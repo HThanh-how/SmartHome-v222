@@ -16,9 +16,10 @@ import { Switch, Slider, Space } from 'antd';
 import s from './Dashboard.module.scss';
 import ApexLineChart from './components/ApexLineChart.js';
 import { turnOff, turnOn } from './components/TurnAll.js';
+import key from '../../assets/keyAdafruit.js';
 
 const Dashboard = () => {
-  const key="aio_lDJR44Osy7eRQWetzVWeNBWe2MTp";
+
   const [tempSensorValue, setTempSensorValue] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
   const [imageData, setImageData] = useState(null);

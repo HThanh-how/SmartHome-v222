@@ -1,5 +1,5 @@
 import axios from "axios";
-const key="aio_lDJR44Osy7eRQWetzVWeNBWe2MTp";
+import key from "../../../assets/keyAdafruit.js";
 
 function sendFanSpeedData (value)  {
     axios

@@ -1,7 +1,6 @@
 {
   "name": "SmartHome",
   "version": "1.1.0",
-
   "homepage": "https://HThanh-how.github.io/SmartHome-v222/",
   "private": true,
   "dependencies": {
@@ -48,7 +47,7 @@
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts docs",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

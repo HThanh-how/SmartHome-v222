@@ -109,7 +109,7 @@ export default function ApexLineChart() {
     },
   ];
 
-
+// update
   return (
     <ApexCharts
       options={chartSettings}

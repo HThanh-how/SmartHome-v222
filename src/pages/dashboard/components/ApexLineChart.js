@@ -32,14 +32,22 @@ const chartSettings = {
       },
     },
   },
-  yaxis: {
+  yaxis: [{
     labels: {
       style: {
         colors: ["#6B859E"],
         opacity: 0.7,
       },
     },
-  },
+  },{    
+    opposite: true,
+    labels: {
+      style: {
+        colors: ["#6B859E"],
+        opacity: 0.7,
+      },
+    },
+}],
   tooltip: {
     x: {
       show: false,
@@ -97,7 +105,7 @@ export default function ApexLineChart() {
     },
     {
       name: "Độ ẩm",
-      data: [parseFloat(humidData[6]?.value)%50, parseFloat(humidData[5]?.value)%50, parseFloat(humidData[4]?.value), parseFloat(humidData[3]?.value)%50, parseFloat(humidData[2]?.value)%50, parseFloat(humidData[1]?.value), parseFloat(humidData[0]?.value)],
+      data: [parseFloat(humidData[6]?.value), parseFloat(humidData[5]?.value), parseFloat(humidData[4]?.value), parseFloat(humidData[3]?.value), parseFloat(humidData[2]?.value), parseFloat(humidData[1]?.value), parseFloat(humidData[0]?.value)],
     },
   ];
 

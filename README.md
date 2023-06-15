@@ -1,1 +1,1 @@
-You can access this: hthanh-how.github.io/SmartHome-v222/
+Visit: hthanh-how.github.io/SmartHome-v222/
